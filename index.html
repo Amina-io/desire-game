@@ -20,14 +20,14 @@ body{font-family:'Press Start 2P',monospace;background:var(--cream);color:var(--
 .screen.active{display:flex;flex-direction:column;align-items:center;justify-content:center;}
 
 /* ── SELECT ── */
-#select-screen{background:var(--cream);padding:16px;gap:0;position:relative;overflow:hidden;}
+#select-screen{background:var(--cream);padding:32px 20px 20px;gap:0;position:relative;overflow:hidden;}
 #select-screen::before{content:'💘💘💘💘💘💘💘💘💘💘💘💘💘💘💘💘💘💘💘💘';position:absolute;top:10px;left:0;right:0;text-align:center;font-size:20px;letter-spacing:4px;opacity:.15;pointer-events:none;}
 #select-screen::after{content:none;}
-.game-title{font-size:clamp(28px,5vw,52px);color:var(--pink);text-shadow:4px 4px 0 var(--pink-dark),8px 8px 0 rgba(200,75,125,.2);letter-spacing:4px;margin-bottom:4px;animation:titlePulse 2s ease-in-out infinite;line-height:1;}
+.game-title{font-size:clamp(28px,5vw,52px);color:var(--pink);text-shadow:4px 4px 0 var(--pink-dark),8px 8px 0 rgba(200,75,125,.2);letter-spacing:4px;margin-bottom:10px;animation:titlePulse 2s ease-in-out infinite;line-height:1;}
 @keyframes titlePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
-.game-desc{font-family:'VT323',monospace;font-size:clamp(13px,1.4vw,16px);color:var(--text-muted);letter-spacing:.5px;text-align:center;max-width:680px;margin-bottom:10px;line-height:1.5;}
+.game-desc{font-family:'VT323',monospace;font-size:clamp(14px,1.4vw,17px);color:var(--text-muted);letter-spacing:.5px;text-align:center;max-width:620px;margin-bottom:18px;line-height:1.6;}
 .game-desc em{color:var(--pink);font-style:normal;}
-.diff-row{display:flex;gap:8px;margin-bottom:12px;align-items:center;flex-wrap:wrap;justify-content:center;}
+.diff-row{display:flex;gap:8px;margin-bottom:18px;align-items:center;flex-wrap:wrap;justify-content:center;}
 .diff-label{font-size:8px;color:var(--text-muted);letter-spacing:2px;margin-right:4px;}
 .diff-btn{font-family:'Press Start 2P',monospace;font-size:8px;padding:7px 12px;border:2px solid var(--text);background:var(--cream);color:var(--text);cursor:pointer;letter-spacing:1px;transition:all .1s;box-shadow:3px 3px 0 var(--text);border-radius:6px;}
 .diff-btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--text);}
@@ -36,11 +36,11 @@ body{font-family:'Press Start 2P',monospace;background:var(--cream);color:var(--
 .diff-btn[data-diff="easy"].selected{background:var(--green);border-color:var(--green-dark);box-shadow:3px 3px 0 var(--green-dark);}
 .diff-btn[data-diff="normal"].selected{background:var(--gold);border-color:#B8860B;box-shadow:3px 3px 0 #B8860B;}
 .diff-btn[data-diff="hard"].selected{background:var(--red);border-color:var(--red-dark);box-shadow:3px 3px 0 var(--red-dark);color:#fff;}
-.diff-song{font-family:'VT323',monospace;font-size:13px;color:var(--text-muted);letter-spacing:1px;}
-.players-row{display:flex;gap:20px;align-items:flex-start;margin-bottom:12px;flex-wrap:wrap;justify-content:center;}
-.player-card{background:var(--white);border:3px solid var(--text);box-shadow:6px 6px 0 var(--text);padding:14px 18px;width:270px;position:relative;border-radius:12px;}
+.diff-song{font-family:'VT323',monospace;font-size:14px;color:var(--text-muted);letter-spacing:1px;}
+.players-row{display:flex;gap:24px;align-items:flex-start;margin-bottom:18px;flex-wrap:wrap;justify-content:center;}
+.player-card{background:var(--white);border:3px solid var(--text);box-shadow:6px 6px 0 var(--text);padding:16px 20px;width:275px;position:relative;border-radius:12px;}
 .player-card::before{content:'';position:absolute;top:-3px;left:-3px;right:-3px;bottom:-3px;border:1px solid var(--pink-light);pointer-events:none;border-radius:14px;}
-.player-tag{font-size:8px;letter-spacing:2px;color:var(--text-muted);margin-bottom:8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.player-tag{font-size:8px;letter-spacing:2px;color:var(--text-muted);margin-bottom:10px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
 .player-tag span{background:var(--text);color:var(--white);padding:2px 8px;font-size:7px;border-radius:4px;}
 /* gender toggle */
 .gender-toggle{display:flex;gap:6px;margin-left:auto;}
@@ -48,29 +48,29 @@ body{font-family:'Press Start 2P',monospace;background:var(--cream);color:var(--
 .gender-btn.selected{background:var(--pink);border-color:var(--pink-dark);color:var(--white);}
 /* cpu badge */
 .cpu-badge{font-family:'VT323',monospace;font-size:13px;background:var(--purple,#9B59B6);color:#fff;padding:1px 7px;border-radius:4px;border:1px solid #6C3483;}
-.char-preview{display:flex;justify-content:center;margin-bottom:10px;}
+.char-preview{display:flex;justify-content:center;margin-bottom:12px;}
 .char-preview canvas{border:2px solid var(--cream2);background:var(--cream);border-radius:6px;}
-.section-mini{font-size:7px;letter-spacing:2px;color:var(--text-muted);margin-bottom:6px;text-transform:uppercase;}
-.skin-row{display:flex;gap:8px;margin-bottom:12px;}
+.section-mini{font-size:7px;letter-spacing:2px;color:var(--text-muted);margin-bottom:7px;text-transform:uppercase;}
+.skin-row{display:flex;gap:10px;margin-bottom:14px;}
 .skin-swatch{width:26px;height:26px;border:3px solid transparent;cursor:pointer;transition:transform .1s;position:relative;border-radius:50%;}
 .skin-swatch:hover{transform:scale(1.15);}
 .skin-swatch.selected{border-color:var(--text);box-shadow:2px 2px 0 var(--text);}
 .skin-swatch::after{content:'';position:absolute;inset:0;border:1px solid rgba(0,0,0,.2);border-radius:50%;}
-.damage-list{display:flex;flex-direction:column;gap:4px;}
+.damage-list{display:flex;flex-direction:column;gap:6px;}
 .damage-wrap{position:relative;}
 .damage-tip{display:none;position:absolute;left:100%;top:50%;transform:translateY(-50%);margin-left:10px;width:160px;background:rgba(44,26,46,.92);border:1.5px solid var(--pink);border-radius:4px;padding:7px 9px;font-family:'VT323',monospace;font-size:14px;color:var(--pink-light);line-height:1.4;letter-spacing:.5px;pointer-events:none;z-index:200;white-space:normal;}
 .damage-tip::before{content:'';position:absolute;right:100%;top:50%;transform:translateY(-50%);border:6px solid transparent;border-right-color:var(--pink);}
 .damage-wrap:hover .damage-tip{display:block;}
-.damage-btn{font-family:'VT323',monospace;font-size:17px;padding:6px 10px;border:2px solid var(--text);background:var(--cream);color:var(--text);cursor:pointer;text-align:left;letter-spacing:1px;transition:all .1s;box-shadow:3px 3px 0 var(--text);position:relative;overflow:hidden;border-radius:8px;width:100%;}
+.damage-btn{font-family:'VT323',monospace;font-size:17px;padding:7px 10px;border:2px solid var(--text);background:var(--cream);color:var(--text);cursor:pointer;text-align:left;letter-spacing:1px;transition:all .1s;box-shadow:3px 3px 0 var(--text);position:relative;overflow:hidden;border-radius:8px;width:100%;}
 .damage-btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--text);}
 .damage-btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--text);}
 .damage-btn.selected{background:var(--text);color:var(--gold);}
 .damage-btn.selected::after{content:'◀';position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:13px;}
-.vs-divider{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding-top:40px;}
-.vs-text{font-size:24px;color:var(--pink);text-shadow:3px 3px 0 var(--pink-dark);animation:vsPulse 1s ease-in-out infinite;}
+.vs-divider{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding-top:44px;}
+.vs-text{font-size:24px;color:var(--pink);animation:vsPulse 1s ease-in-out infinite;}
 @keyframes vsPulse{0%,100%{opacity:1}50%{opacity:.4}}
 .heart-chain{font-size:16px;writing-mode:vertical-lr;letter-spacing:8px;opacity:.3;}
-.start-btn{font-family:'Press Start 2P',monospace;font-size:clamp(12px,1.5vw,18px);padding:14px 40px;background:var(--pink);color:var(--white);border:4px solid var(--text);box-shadow:6px 6px 0 var(--text);cursor:pointer;letter-spacing:3px;transition:all .1s;animation:startPulse 1.5s ease-in-out infinite;border-radius:10px;}
+.start-btn{font-family:'Press Start 2P',monospace;font-size:clamp(12px,1.5vw,18px);padding:14px 40px;background:var(--pink);color:var(--white);border:4px solid var(--text);box-shadow:6px 6px 0 var(--text);cursor:pointer;letter-spacing:3px;transition:all .1s;animation:startPulse 1.5s ease-in-out infinite;border-radius:10px;margin-top:4px;}
 @keyframes startPulse{0%,100%{box-shadow:6px 6px 0 var(--text)}50%{box-shadow:8px 8px 0 var(--text),0 0 20px rgba(255,107,157,.4)}}
 .start-btn:hover{background:var(--pink-dark);transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--text);animation:none;}
 .start-btn:active{transform:translate(4px,4px);box-shadow:2px 2px 0 var(--text);}
@@ -109,7 +109,7 @@ body{font-family:'Press Start 2P',monospace;background:var(--cream);color:var(--
 .result-box{background:var(--white);border:4px solid var(--text);box-shadow:8px 8px 0 var(--text);padding:24px 36px;width:100%;border-radius:14px;}
 .result-emoji-big{font-size:64px;display:block;margin-bottom:6px;animation:resultBounce .6s ease-in-out;}
 @keyframes resultBounce{0%{transform:scale(0)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
-.result-title{font-size:clamp(14px,2vw,20px);color:var(--pink);text-shadow:3px 3px 0 var(--pink-dark);margin-bottom:8px;line-height:1.5;}
+.result-title{font-size:clamp(14px,2vw,20px);color:var(--pink);margin-bottom:8px;line-height:1.5;}
 .result-flavor{font-family:'VT323',monospace;font-size:22px;color:var(--text-muted);letter-spacing:1px;line-height:1.4;}
 .result-stats{display:flex;gap:20px;justify-content:center;margin-top:10px;flex-wrap:wrap;}
 .result-stat{font-family:'VT323',monospace;font-size:18px;color:var(--text-muted);}
@@ -136,7 +136,7 @@ body{font-family:'Press Start 2P',monospace;background:var(--cream);color:var(--
 /* ── LEADERBOARD SCREEN ── */
 #leaderboard-screen{background:var(--cream);overflow-y:auto;}
 .lb-inner{max-width:600px;width:100%;padding:30px 20px;display:flex;flex-direction:column;gap:14px;align-items:center;}
-.lb-title{font-size:clamp(18px,3vw,28px);color:var(--pink);text-shadow:3px 3px 0 var(--pink-dark);letter-spacing:3px;}
+.lb-title{font-size:clamp(18px,3vw,28px);color:var(--pink);letter-spacing:3px;}
 .lb-subtitle{font-family:'VT323',monospace;font-size:18px;color:var(--text-muted);}
 .lb-filters{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;}
 .lb-filter-btn{font-family:'Press Start 2P',monospace;font-size:7px;padding:5px 10px;border:2px solid var(--text-muted);background:var(--cream);color:var(--text-muted);cursor:pointer;border-radius:5px;transition:all .1s;}
@@ -268,7 +268,7 @@ body{font-family:'Press Start 2P',monospace;background:var(--cream);color:var(--
     </div>
   </div>
   <button class="start-btn" id="start-btn">▶ START GAME</button>
-  <a class="credit" href="https://x.com/amina_io" target="_blank">made by @amina_io</a>
+  <a class="credit" href="https://x.com/amina_io" target="_blank">created in jest by @amina_io</a>
 </div>
 
 <!-- GAME -->
@@ -293,7 +293,7 @@ body{font-family:'Press Start 2P',monospace;background:var(--cream);color:var(--
     <div class="status-hud" id="status-hud">bring these lovebirds together!!</div>
     <div class="streak-hud" id="streak-hud">🔥 streak: 0</div>
     <button class="mute-btn" id="mute-btn">♪ mute</button>
-    <a class="credit" href="https://x.com/amina_io" target="_blank">made by @amina_io</a>
+    <a class="credit" href="https://x.com/amina_io" target="_blank">created in jest by @amina_io</a>
     <div class="game-bottom">
       <div class="ctrl-cluster">
         <div class="ctrl-label">A / D  or  ← →</div>
@@ -340,7 +340,7 @@ body{font-family:'Press Start 2P',monospace;background:var(--cream);color:var(--
       <button class="lb-btn" id="view-lb-btn">🏆 leaderboard</button>
     </div>
   </div>
-  <a class="credit" href="https://x.com/amina_io" target="_blank">made by @amina_io</a>
+  <a class="credit" href="https://x.com/amina_io" target="_blank">created in jest by @amina_io</a>
 </div>
 
 <!-- LEADERBOARD -->
@@ -357,7 +357,7 @@ body{font-family:'Press Start 2P',monospace;background:var(--cream);color:var(--
     <div id="lb-content" class="lb-loading">loading...</div>
     <button class="lb-back-btn" id="lb-back-btn">← back</button>
   </div>
-  <a class="credit" href="https://x.com/amina_io" target="_blank">made by @amina_io</a>
+  <a class="credit" href="https://x.com/amina_io" target="_blank">created in jest by @amina_io</a>
 </div>
 
 <!-- AUDIO -->
@@ -788,6 +788,9 @@ function endGame(){
   document.getElementById('result-combo-tag').textContent=`${ATT_NAMES[p1.att]} + ${ATT_NAMES[p2.att]} · ${cfg.label}`;
   // reset name entry
   document.getElementById('player-name-input').value='';
+  // auto-fill saved name if exists
+  const savedName=localStorage.getItem('desire_player_name');
+  if(savedName) document.getElementById('player-name-input').value=savedName;
   document.getElementById('score-submitted').style.display='none';
   document.getElementById('submit-score-btn').disabled=false;
   document.getElementById('name-entry-wrap').style.display=lastScore>0?'flex':'none';
@@ -819,6 +822,7 @@ document.querySelectorAll('.lb-filter-btn').forEach(btn=>{
 document.getElementById('submit-score-btn').addEventListener('click',async()=>{
   const name=document.getElementById('player-name-input').value.trim();
   if(!name)return;
+  localStorage.setItem('desire_player_name',name);
   const btn=document.getElementById('submit-score-btn');
   btn.disabled=true;btn.textContent='saving...';
   const ok=await sbInsert({player_name:name,connection_time:lastScore,combo:`${ATT_NAMES[p1.att]} + ${ATT_NAMES[p2.att]}`,difficulty:cfg.label});
