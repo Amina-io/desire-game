@@ -178,6 +178,14 @@ body{font-family:'Press Start 2P',monospace;background:var(--cream);color:var(--
 @media(orientation:portrait) and (max-width:700px){
   .game-bottom{flex-direction:column;align-items:center;gap:8px;}
 }
+@media(max-width:600px){
+  #select-screen{padding:14px 10px 10px;overflow-y:auto;justify-content:flex-start;}
+  .player-card{width:95vw;max-width:none;}
+  .game-desc{margin-bottom:10px;}
+  .diff-row{gap:6px;margin-bottom:10px;}
+  .players-row{gap:8px;margin-bottom:10px;}
+  .start-btn{margin-top:0;}
+}
 </style>
 </head>
 <body>
@@ -901,6 +909,17 @@ function bindBtn(id,player,dir){
   el.addEventListener('mouseup',up);el.addEventListener('mouseleave',up);el.addEventListener('touchend',up);el.addEventListener('touchcancel',up);
 }
 bindBtn('b-p1-left',p1,'L');bindBtn('b-p1-right',p1,'R');
+
+// Screen tap zones: left 50% of screen → move left, right 50% → move right
+(function(){
+  const gs=document.getElementById('game-screen');
+  function update(e){if(!gameRunning)return;p1.btnL=false;p1.btnR=false;for(let i=0;i<e.touches.length;i++){if(e.touches[i].clientX<window.innerWidth*.5)p1.btnL=true;else p1.btnR=true;}}
+  gs.addEventListener('touchstart',update,{passive:true});
+  gs.addEventListener('touchmove',update,{passive:true});
+  gs.addEventListener('touchend',update,{passive:true});
+  gs.addEventListener('touchcancel',()=>{p1.btnL=false;p1.btnR=false;},{passive:true});
+})();
+
 document.addEventListener('keydown',e=>{
   if(e.key==='a'||e.key==='A'||e.key==='ArrowLeft'){if(e.key.startsWith('A'))e.preventDefault();p1.btnL=true;document.getElementById('b-p1-left').classList.add('pressed');}
   if(e.key==='d'||e.key==='D'||e.key==='ArrowRight'){if(e.key.startsWith('A'))e.preventDefault();p1.btnR=true;document.getElementById('b-p1-right').classList.add('pressed');}
