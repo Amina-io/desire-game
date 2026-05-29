@@ -440,7 +440,20 @@ function playBlip(type='soft'){
   else if(type==='heartbreak'){o.type='sine';o.frequency.setValueAtTime(220,t);o.frequency.exponentialRampToValueAtTime(110,t+.3);g.gain.setValueAtTime(.2,t);g.gain.exponentialRampToValueAtTime(.001,t+.4);o.start(t);o.stop(t+.4);}
 }
 
-function startChiptune(){if(isMuted)return;const el=document.getElementById('audio-select');if(!el)return;el.volume=0.4;chipPlaying=true;el.play().catch(()=>{});}
+function startChiptune(){
+  if(isMuted)return;
+  const el=document.getElementById('audio-select');
+  if(!el)return;
+  el.volume=0; chipPlaying=true;
+  el.play().catch(()=>{});
+  // gentle fade in over 2 seconds so it doesn't blast
+  let v=0;
+  const fadeIn=setInterval(()=>{
+    v=Math.min(0.4,v+0.02);
+    el.volume=v;
+    if(v>=0.4) clearInterval(fadeIn);
+  },100);
+}
 function stopChiptune(){chipPlaying=false;const el=document.getElementById('audio-select');if(el){el.pause();el.currentTime=0;}}
 function playMusic(id){stopChiptune();if(currentAudio){currentAudio.pause();currentAudio.currentTime=0;}if(isMuted)return;const el=document.getElementById(id);if(!el)return;el.volume=0.4;currentAudio=el;el.play().catch(()=>{});}
 function stopMusic(){if(currentAudio){currentAudio.pause();currentAudio.currentTime=0;}}
@@ -629,34 +642,73 @@ const ATT_NAMES={anxious:'Stage 5 Clinger',avoidant:'Needs Space™',disorganize
 function applyBehavior(player,other,W,H,isPlayer){
   let ax=0,ay=0;
   const dx=other.x-player.x,dy=other.y-player.y;
-  const dist=Math.sqrt(dx*dx+dy*dy);
+  const dist=Math.sqrt(dx*dx+dy*dy)+0.001;
+  // normalized direction toward other
+  const nx=dx/dist, ny=dy/dist;
 
   if(player.att==='anxious'){
     if(player.overshotCooldown>0){
       player.overshotCooldown--;
       if(Math.random()<.04){ax+=(Math.random()-.5)*3;ay+=(Math.random()-.5)*1.5;}
     } else {
-      const str=Math.min(cfg.anxiousStr*.75,5/Math.max(dist,1));
-      ax=dx*str;ay=dy*str*.45;
-      if(dist<50&&-(player.vx*(dx/Math.max(dist,1)))<-2.0) player.overshotCooldown=50+Math.floor(Math.random()*40);
-      if(Math.random()<.018){ax+=(Math.random()-.5)*4;ay+=(Math.random()-.5)*2;}
+      // chase force — stronger when far, weaker up close
+      const str=Math.min(cfg.anxiousStr*.75, 5/Math.max(dist,1));
+      ax=nx*str*dist*.012; ay=ny*str*dist*.006;
+      ax=Math.max(-0.8,Math.min(0.8,ax));
+      ay=Math.max(-0.4,Math.min(0.4,ay));
+      // overshoot — if moving fast and very close, drift past
+      if(dist<50 && -(player.vx*nx)<-2.0)
+        player.overshotCooldown=50+Math.floor(Math.random()*40);
+      // scatter twitch — random drift so it's not a perfect magnet
+      if(Math.random()<.02){ax+=(Math.random()-.5)*3;ay+=(Math.random()-.5)*1.5;}
     }
+    // DYNAMIC: if OTHER person is avoidant, anxious gets a slight extra
+    // pull boost when close (they're trying harder the more the other runs)
+    if(other.att==='avoidant' && dist<200){
+      const urgency=(200-dist)/200; // 0→1 as they get closer
+      ax+=nx*urgency*0.3;
+    }
+
   } else if(player.att==='avoidant'){
-    const flee=Math.min(cfg.avoidantFlee*1.25,700/(dist*dist+1));
-    ax=-dx*flee*1.6;ay=-dy*flee*.4;
-    // wall bounce — no getting pinned
+    // DYNAMIC REPULSION FIELD:
+    // flee force scales inversely with distance — the closer they get, the HARDER the push
+    // close range: very strong repulsion; far range: mild drift away
+    const closeRepulse = Math.min(2.5, 120/(dist*dist*0.01+1));
+    const farDrift = Math.min(0.4, cfg.avoidantFlee * dist * 0.002);
+    const totalFlee = closeRepulse + farDrift;
+    ax=-nx*totalFlee; ay=-ny*totalFlee*.4;
+    // wall bounce
     if(player.x<W*.08) ax+=1.2; if(player.x>W*.92) ax-=1.2;
-    if(dist>W*.55) ax*=.35;
-    if(Math.random()<.008){ax+=dx*.006;ay+=dy*.004;}
+    // when very far, slow the flee — gives player a fighting chance
+    if(dist>W*.55) ax*=.3;
+    // rare "almost" moment — occasional hesitation toward other
+    if(Math.random()<.006){ax+=nx*.4;ay+=ny*.2;}
+
   } else {
+    // CHAOS GOBLIN
     player.chaosCooldown--;
-    if(player.chaosCooldown<=0){player.chaosMode=Math.random()<.5?1:-1;player.chaosCooldown=cfg.chaosFlipMin+Math.floor(Math.random()*(cfg.chaosFlipMax-cfg.chaosFlipMin));}
+    if(player.chaosCooldown<=0){
+      player.chaosMode=Math.random()<.5?1:-1;
+      player.chaosCooldown=cfg.chaosFlipMin+Math.floor(Math.random()*(cfg.chaosFlipMax-cfg.chaosFlipMin));
+    }
     const cStr=Math.min(.012,6/Math.max(dist,1));
-    ax=dx*cStr*player.chaosMode*1.6;ay=dy*cStr*player.chaosMode*.55;
+    ax=nx*cStr*player.chaosMode*dist*.015; ay=ny*cStr*player.chaosMode*.55;
     if(Math.random()<.07){ax+=(Math.random()-.5)*cfg.chaosImpulse*1.3;ay+=(Math.random()-.5)*(cfg.chaosImpulse*.4);}
-    ax+=Math.sin(frameT*.06+player.x*.009)*.6;ay+=Math.cos(frameT*.05+player.y*.009)*.3;
+    ax+=Math.sin(frameT*.06+player.x*.009)*.6; ay+=Math.cos(frameT*.05+player.y*.009)*.3;
     if(player.x<W*.08) ax+=1.0; if(player.x>W*.92) ax-=1.0;
   }
+
+  // UNIVERSAL SCATTER EFFECT:
+  // if OTHER person is anxious and getting close, this person gets a
+  // mild random scatter — like social anxiety making someone fidget away
+  if(other.att==='anxious' && dist<120 && player.att!=='anxious'){
+    const proximity=(120-dist)/120; // 0→1 as anxious person approaches
+    if(Math.random()<proximity*.08){
+      ax+=(Math.random()-.5)*proximity*2.5;
+      ay+=(Math.random()-.5)*proximity*1.2;
+    }
+  }
+
   return{ax,ay};
 }
 
